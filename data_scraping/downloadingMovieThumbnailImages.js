@@ -15,10 +15,10 @@ const path = require('path');
 const fs = require('fs');
 const https = require('https');
 
-let dataScrappingPath = process.cwd();
-if (fs.existsSync('data_scrapping')) dataScrappingPath = path.join(dataScrappingPath, 'data_scrapping');
+let dataScrapingPath = process.cwd();
+if (fs.existsSync('data_scraping')) dataScrapingPath = path.join(dataScrapingPath, 'data_scraping');
 
-const movieDataPath = path.join(dataScrappingPath, 'movieData.json');
+const movieDataPath = path.join(dataScrapingPath, 'movieData.json');
 if (!fs.existsSync(movieDataPath)) {
   console.error('movieData.json file does not exist. Fpllow steps in capturingMovieDataFromImdb.js first.');
   process.exit(1);
@@ -26,7 +26,7 @@ if (!fs.existsSync(movieDataPath)) {
 
 const movieData = JSON.parse(fs.readFileSync(movieDataPath, 'utf8'));
 
-const angularAssetsPath = path.join(dataScrappingPath, '..', 'src', 'assets');
+const angularAssetsPath = path.join(dataScrapingPath, '..', 'src', 'assets');
 if (!fs.existsSync(angularAssetsPath)) fs.mkdirSync(angularAssetsPath);
 
 // I would prefer to use symbolic links here, but I have spent too much time trying to get user elevation to work on Windows, without add additional packages.
