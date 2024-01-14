@@ -1,4 +1,12 @@
-# BlockbusterRentalsApp
+<center>
+<img alt="Blockbuster Logo" src="src/assets/Blockbuster_logo.svg" width="250" />
+
+<br />
+
+<h1>Blockbuster Rentals App</h1>
+
+<h2>Created by Martin Shaw to demonstrate Angular abilities for RealityMine role</h2>
+</center>
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.10.
 
