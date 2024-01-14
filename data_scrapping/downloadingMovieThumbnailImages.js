@@ -1,9 +1,14 @@
-// You should run this script using node.js as a administrator-type user (on Windows) or as root (on Linux).
+// You should run this script using node.js
+
+/**
+ * Complete the steps in capturingMovieDataFromImdb.js before running this script to populate movieData.json
+ * with up-to-date data.
+ */
 
 /**
  * It loads the thumbnail URLs from movieData.json,
  * then downloads them with the appropriate file names,
- * then creates a symlink to the thumbnails folder and movieData.json file in the Angular project's assets folder
+ * then copies the movieData.json file to the Angular project's assets.
  */
 
 const path = require('path');
@@ -13,15 +18,26 @@ const https = require('https');
 let dataScrappingPath = process.cwd();
 if (fs.existsSync('data_scrapping')) dataScrappingPath = path.join(dataScrappingPath, 'data_scrapping');
 
-const movieData = JSON.parse(fs.readFileSync(path.join(dataScrappingPath, 'movieData.json'), 'utf8'));
-
 const movieDataPath = path.join(dataScrappingPath, 'movieData.json');
+if (!fs.existsSync(movieDataPath)) {
+  console.error('movieData.json file does not exist. Fpllow steps in capturingMovieDataFromImdb.js first.');
+  process.exit(1);
+}
 
-const thumbnailsPath = path.join(dataScrappingPath, 'thumbnails');
-if (!fs.existsSync(thumbnailsPath)) fs.mkdirSync(thumbnailsPath);
+const movieData = JSON.parse(fs.readFileSync(movieDataPath, 'utf8'));
+
+const angularAssetsPath = path.join(dataScrappingPath, '..', 'src', 'assets');
+if (!fs.existsSync(angularAssetsPath)) fs.mkdirSync(angularAssetsPath);
+
+// I would prefer to use symbolic links here, but I have spent too much time trying to get user elevation to work on Windows, without add additional packages.
+
+const angularAssetsThumbnailPath = path.join(angularAssetsPath, 'thumbnails');
+
+if (fs.existsSync(angularAssetsThumbnailPath)) fs.rmdirSync(angularAssetsThumbnailPath, { recursive: true });
+fs.mkdirSync(angularAssetsThumbnailPath);
 
 movieData.forEach(movie => {
-  const filePath = path.join(thumbnailsPath, `${movie.id}.jpg`);
+  const filePath = path.join(angularAssetsThumbnailPath, `${movie.id}.jpg`);
   const file = fs.createWriteStream(filePath);
 
   https.get(movie.thumbnail, response => {
@@ -29,13 +45,6 @@ movieData.forEach(movie => {
   });
 });
 
-const angularAssetsPath = path.join(dataScrappingPath, '..', 'src', 'assets');
-if (!fs.existsSync(angularAssetsPath)) fs.mkdirSync(angularAssetsPath);
-
-const angularAssetsThumbnailPath = path.join(angularAssetsPath, 'thumbnails');
-if (fs.existsSync(angularAssetsThumbnailPath)) fs.unlinkSync(angularAssetsThumbnailPath);
-if (!fs.existsSync(angularAssetsThumbnailPath)) fs.symlinkSync(thumbnailsPath, angularAssetsThumbnailPath);
-
 const angularAssetsMovieDataPath = path.join(angularAssetsPath, 'movieData.json');
-if (fs.existsSync(angularAssetsMovieDataPath)) fs.unlinkSync(angularAssetsMovieDataPath);
-if (!fs.existsSync(angularAssetsMovieDataPath)) fs.symlinkSync(movieDataPath, angularAssetsMovieDataPath);
+
+fs.copyFileSync(movieDataPath, angularAssetsMovieDataPath);

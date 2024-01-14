@@ -22,3 +22,7 @@ if (current.indexOf('s') > -1) carry.s = parseInt(current.match(/(\d+)/)[0]);
       description: itemElement.querySelector('.ipc-html-content-inner-div').innerText,
   };
 });
+
+/**
+ * Note: this could be done automatically using puppeteer, but that would increase the size of the Angular project unnecessarily.
+ */
