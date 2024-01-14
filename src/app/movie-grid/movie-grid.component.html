@@ -1,1 +1,3 @@
-<p>movie-grid works!</p>
+<div *ngFor="let movie of movies; index as i; first as isFirst">
+  <app-movie-grid-item [movie]="movie" [index]="i"></app-movie-grid-item>
+</div>

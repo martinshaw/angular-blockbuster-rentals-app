@@ -1,3 +1,9 @@
-<app-header title="Rentals"/>
+<app-header title="Rentals" (onToggleSidebar)="toggleSidebar()"/>
+
+<app-sidebar-container [sidebarIsOpen]="sidebarIsOpen">
+
+  <app-movie-grid></app-movie-grid>
+
+</app-sidebar-container>
 
 <router-outlet></router-outlet>
