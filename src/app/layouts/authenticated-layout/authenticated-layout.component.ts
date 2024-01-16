@@ -4,6 +4,7 @@ import { RouterModule, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from '../../header/header.component';
 import { SidebarContainerComponent } from '../../sidebar-container/sidebar-container.component';
 import { MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @Component({
   selector: 'app-authenticated-layout',
@@ -15,14 +16,13 @@ import { MatButtonModule } from '@angular/material/button';
     HeaderComponent,
     SidebarContainerComponent,
     MatButtonModule,
+    MatToolbarModule,
   ],
   templateUrl: './authenticated-layout.component.html',
   styleUrl: './authenticated-layout.component.scss'
 })
 export class AuthenticatedLayoutComponent {
-  sidebarIsOpen = false;
-
-  toggleSidebar() {
-    this.sidebarIsOpen = !this.sidebarIsOpen;
-  }
+  title = 'Blockbuster Rental';
 }
+
+

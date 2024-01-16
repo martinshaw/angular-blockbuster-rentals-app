@@ -15,5 +15,5 @@ import { RouterModule } from '@angular/router';
   styleUrl: './sidebar-container.component.scss'
 })
 export class SidebarContainerComponent {
-  @Input() sidebarIsOpen!: boolean;
+  //
 }

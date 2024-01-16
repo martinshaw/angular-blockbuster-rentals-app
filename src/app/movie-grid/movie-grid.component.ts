@@ -26,7 +26,7 @@ export class MovieGridComponent {
     ) {
       this.isBrowser = isPlatformBrowser(platformId);
 
-      if (this.isBrowser === true) this.currentUrlOrigin = document.location.origin;
+      if (this.isBrowser === true) this.currentUrlOrigin = window.location.origin;
     }
 
   movies: MovieType[] = []

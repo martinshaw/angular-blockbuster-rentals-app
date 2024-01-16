@@ -1,6 +1,6 @@
-<app-header title="Rentals" (onToggleSidebar)="toggleSidebar()"/>
+<app-header [title]="this.title"/>
 
-<app-sidebar-container [sidebarIsOpen]="sidebarIsOpen">
+<app-sidebar-container>
 
   <router-outlet></router-outlet>
 

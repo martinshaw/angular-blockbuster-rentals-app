@@ -1,27 +1,35 @@
 <mat-toolbar color="primary">
-  <button
-    mat-icon-button
-    class="example-icon"
-    aria-label="Example icon-button with menu icon"
-    (click)="toggleSidebar()"
-  >
-    <mat-icon>menu</mat-icon>
-  </button>
+
   <img class="logo" src="/assets/Blockbuster_logo.svg" height="40" />
+
   <span>{{ title }}</span>
+
   <span class="toolbar-spacer"></span>
-  <button
+
+  <!-- <button
     mat-icon-button
     class="example-icon favorite-icon"
     aria-label="Example icon-button with heart icon"
   >
     <mat-icon>favorite</mat-icon>
   </button>
+
   <button
     mat-icon-button
     class="example-icon"
     aria-label="Example icon-button with share icon"
   >
     <mat-icon>share</mat-icon>
-  </button>
+  </button> -->
+
 </mat-toolbar>
+
+<nav mat-tab-nav-bar [backgroundColor]="'primary'" [tabPanel]="tabPanel">
+  @for (link of linkCaptions; track link) {
+    <a mat-tab-link
+      (click)="changeActiveLink(link)"
+      [active]="activeLink == link"> {{link}} </a>
+  }
+</nav>
+
+<mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
