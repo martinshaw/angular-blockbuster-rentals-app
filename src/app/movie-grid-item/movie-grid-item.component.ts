@@ -4,12 +4,15 @@ import { MatCardModule } from '@angular/material/card';
 import { MovieType } from '../app.types';
 import { SliceWordPipe } from '../slice-word.pipe';
 import { SliceUntilFirstDotPipe } from '../slice-until-first-dot.pipe';
-import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-movie-grid-item',
   standalone: true,
   imports: [
+    CommonModule,
+    RouterModule,
     MatButtonModule,
     MatCardModule,
     SliceWordPipe,

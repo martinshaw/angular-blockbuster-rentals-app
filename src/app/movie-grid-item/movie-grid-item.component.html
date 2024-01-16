@@ -3,39 +3,53 @@
     <mat-card-title> {{ movie.title }}</mat-card-title>
     <mat-card-subtitle>0 Available</mat-card-subtitle>
   </mat-card-header>
-  <img mat-card-image [src]="'/assets/thumbnails/' + movie.id + '.jpg'" [alt]="movie.title" class="image">
-  <mat-card-content class="content">
 
+  <img
+    mat-card-image
+    [src]="'/assets/thumbnails/' + movie.id + '.jpg'"
+    [alt]="movie.title"
+    class="image"
+  />
+
+  <mat-card-content class="content">
     <mat-card-subtitle class="content__details">
       <div class="content__details__detail">
         <div>Released</div>
-        <div>{{movie.year}}</div>
+        <div>{{ movie.year }}</div>
       </div>
       <div class="content__details__detail">
         <div>Restriction</div>
-        <div>{{movie.rating}}</div>
+        <div>{{ movie.rating }}</div>
       </div>
       <div class="content__details__detail">
         <div>Duration</div>
-        <div>{{movie.length.h}}h {{movie.length.m}}m</div>
+        <div>{{ movie.length.h }}h {{ movie.length.m }}m</div>
       </div>
       <div class="content__details__detail">
         <div>IMDB Rating</div>
-        <div>{{movie.ranking}} ({{movie.voteCount}})</div>
+        <div>{{ movie.ranking }} ({{ movie.voteCount }})</div>
       </div>
       <div class="content__details__detail">
         <div>Metarating</div>
-        <div>{{movie.metarating}}</div>
+        <div>{{ movie.metarating }}</div>
       </div>
     </mat-card-subtitle>
 
     <p class="content__description">
-      {{movie.description | sliceUntilFirstDot}}
+      {{ movie.description | sliceUntilFirstDot }}
     </p>
-
   </mat-card-content>
+
   <mat-card-actions class="actions">
-    <button (click)="navigateToMovieDetails()" mat-button>Details</button>
-    <button *ngIf="canBeAddedToRentalCart" (click)="addMovieToRentalCart()" mat-button>Add to Rental</button>
+    <a [routerLink]="['/movies', movie.id]">
+      <button mat-button>Details</button>
+    </a>
+    <button
+      *ngIf="canBeAddedToRentalCart"
+      (click)="addMovieToRentalCart()"
+      mat-button
+    >
+      Add to Rental
+    </button>
   </mat-card-actions>
 </mat-card>

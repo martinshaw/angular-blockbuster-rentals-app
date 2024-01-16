@@ -1,9 +1,3 @@
-<app-header title="Rentals" (onToggleSidebar)="toggleSidebar()"/>
-
-<app-sidebar-container [sidebarIsOpen]="sidebarIsOpen">
-
-  <app-movie-grid></app-movie-grid>
-
-</app-sidebar-container>
+<ng-content></ng-content>
 
 <router-outlet></router-outlet>
