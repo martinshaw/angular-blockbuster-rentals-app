@@ -32,6 +32,8 @@ export class MovieGridComponent {
   movies: MovieType[] = []
 
   ngOnInit() {
+    if (this.currentUrlOrigin === '') return;
+
     fetch(this.currentUrlOrigin + '/assets/movieData.json')
       .then(response => response.json())
       .then(data => {
