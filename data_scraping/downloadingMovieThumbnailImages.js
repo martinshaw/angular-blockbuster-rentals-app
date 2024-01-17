@@ -1,4 +1,4 @@
-// You should run this script using node.js
+// You should run this script using Node.js
 
 /**
  * Complete the steps in capturingMovieDataFromImdb.js before running this script to populate movieData.json
@@ -29,7 +29,10 @@ const movieData = JSON.parse(fs.readFileSync(movieDataPath, 'utf8'));
 const angularAssetsPath = path.join(dataScrapingPath, '..', 'src', 'assets');
 if (!fs.existsSync(angularAssetsPath)) fs.mkdirSync(angularAssetsPath);
 
-// I would prefer to use symbolic links here, but I have spent too much time trying to get user elevation to work on Windows, without add additional packages.
+/**
+ * I would prefer to use symbolic links here, but I have spent too much time trying to get user
+ * elevation to work on Windows,without add additional packages.
+ */
 
 const angularAssetsThumbnailPath = path.join(angularAssetsPath, 'thumbnails');
 

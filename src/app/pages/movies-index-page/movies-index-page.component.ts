@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MovieGridComponent } from '../../movie-grid/movie-grid.component';
+import { MovieGridComponent } from '../../components/movie-grid/movie-grid.component';
 import { RouterModule } from '@angular/router';
 
 @Component({

@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component, Input, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { MatButtonModule, MatIconButton } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MovieType } from '../app.types';
-import { SliceWordPipe } from '../slice-word.pipe';
-import { SliceUntilFirstDotPipe } from '../slice-until-first-dot.pipe';
+import { MovieType } from '../../app.types';
+import { SliceWordPipe } from '../../pipes/slice-word.pipe';
+import { SliceUntilFirstDotPipe } from '../../pipes/slice-until-first-dot.pipe';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
-import { RentalCreationSidebarFormService } from '../rental-creation-sidebar-form.service';
+import { RentalCreationSidebarFormService } from '../../services/rental-creation-sidebar-form.service';
 
 @Component({
   selector: 'app-movie-grid-item',

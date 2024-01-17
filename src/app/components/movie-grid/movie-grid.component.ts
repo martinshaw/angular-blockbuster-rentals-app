@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MovieGridItemComponent } from '../movie-grid-item/movie-grid-item.component';
 import { CommonModule } from '@angular/common';
-import { MovieType } from '../app.types';
+import { MovieType } from '../../app.types';
 import { RouterModule } from '@angular/router';
 import { PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';

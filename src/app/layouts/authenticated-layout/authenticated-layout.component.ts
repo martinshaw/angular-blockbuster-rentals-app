@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, RouterOutlet } from '@angular/router';
-import { HeaderComponent } from '../../header/header.component';
-import { SidebarContainerComponent } from '../../sidebar-container/sidebar-container.component';
+import { HeaderComponent } from './components/header/header.component';
+import { SidebarContainerComponent } from './components/sidebar-container/sidebar-container.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 

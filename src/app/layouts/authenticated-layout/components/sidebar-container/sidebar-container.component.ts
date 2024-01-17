@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, OnInit
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterModule } from '@angular/router';
-import { RentalCreationSidebarFormService } from '../rental-creation-sidebar-form.service';
+import { RentalCreationSidebarFormService } from '../../../../services/rental-creation-sidebar-form.service';
 import { Observable, Subscription } from 'rxjs';
 import { AsyncPipe, CommonModule, JsonPipe } from '@angular/common';
 
