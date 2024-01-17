@@ -2,9 +2,11 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
-import { SidebarContainerComponent } from './components/sidebar-container/sidebar-container.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { RentalCreationSidebarComponent } from './components/rental-creation-sidebar/rental-creation-sidebar.component';
+import { RentalCreationSidebarFormService } from '../../services/rental-creation-sidebar-form.service';
 
 @Component({
   selector: 'app-authenticated-layout',
@@ -14,15 +16,22 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     RouterModule,
     RouterOutlet,
     HeaderComponent,
-    SidebarContainerComponent,
     MatButtonModule,
     MatToolbarModule,
+    MatSidenavModule,
+    RentalCreationSidebarComponent,
   ],
   templateUrl: './authenticated-layout.component.html',
   styleUrl: './authenticated-layout.component.scss'
 })
 export class AuthenticatedLayoutComponent {
   title = 'Blockbuster Rental';
+
+  constructor(
+    public rentalCreationSidebarFormService: RentalCreationSidebarFormService,
+  ) {
+    //
+  }
 }
 
 

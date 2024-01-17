@@ -1,0 +1,21 @@
+<mat-card>
+  <div class="container">
+    <div class="image">
+      <img
+        [src]="'/assets/thumbnails/' + movie.id + '.jpg'"
+        [alt]="movie.title"
+      />
+    </div>
+    <div class="details">
+      <div class="title">{{ movie.title }}</div>
+      <!-- TODO: Add price instead of year when I have added mock API-->
+      <div class="year">{{ movie.year }}</div>
+    </div>
+    <div class="buttons">
+      <!-- Remove movie icon button-->
+      <button mat-icon-button color="warn" (click)="this.rentalCreationSidebarFormService.removeMovieFromPendingRental(movie)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </div>
+</mat-card>

@@ -1,0 +1,48 @@
+<div class="sidebar">
+  <div class="scroll-container">
+    <app-mini-movie-list
+      [movies]="this.rentalCreationSidebarFormService.getMoviesPendingRental()"
+    ></app-mini-movie-list>
+  </div>
+
+  <div class="totals">
+    <div class="total">
+      <div class="label">Total</div>
+      <div class="value">
+        {{ this.rentalCreationSidebarFormService.getPendingRentalTotal() | currency }}
+      </div>
+    </div>
+    <div class="total">
+      <div class="label">Discount</div>
+      <div class="value">
+        {{ this.rentalCreationSidebarFormService.getPendingRentalDiscount() | currency }}
+      </div>
+    </div>
+    <div class="total">
+      <div class="label">Subtotal</div>
+      <div class="value">
+        {{ this.rentalCreationSidebarFormService.getPendingRentalSubtotal() | currency }}
+      </div>
+    </div>
+  </div>
+
+  <div class="buttons">
+    <button
+      mat-button
+      color="warn"
+      (click)="this.rentalCreationSidebarFormService.clearMoviesPendingRental()"
+    >
+      Cancel
+    </button>
+    <button
+      mat-button
+      color="primary"
+      [disabled]="
+        this.rentalCreationSidebarFormService.canSubmitPendingRental() === false
+      "
+      (click)="this.rentalCreationSidebarFormService.submitPendingRental()"
+    >
+      Confirm
+    </button>
+  </div>
+</div>

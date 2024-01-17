@@ -57,8 +57,8 @@ export class MovieGridItemComponent implements OnInit, OnDestroy {
 
   canBeAddedToRentalCart = true;
 
-  addMovieToRentalCart(movieId: number) {
-    this.rentalCreationSidebarFormService.setSidebarIsOpen(true);
+  addMovieToRentalCart(movie: MovieType) {
+    this.rentalCreationSidebarFormService.addMovieToPendingRental(movie);
   }
 }
 

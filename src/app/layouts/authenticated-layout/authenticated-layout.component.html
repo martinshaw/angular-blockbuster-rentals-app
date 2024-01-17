@@ -1,8 +1,15 @@
-<app-header [title]="this.title"/>
+<mat-drawer-container class="drawer-container" autosize>
+  <app-header [title]="this.title"/>
 
-<app-sidebar-container>
+  <mat-drawer
+    #drawer
+    class="sidebar"
+    mode="side"
+    position="end"
+    [opened]="this.rentalCreationSidebarFormService.getSidebarIsOpen()"
+  >
+    <app-rental-creation-sidebar></app-rental-creation-sidebar>
+  </mat-drawer>
 
   <router-outlet></router-outlet>
-
-</app-sidebar-container>
-
+</mat-drawer-container>

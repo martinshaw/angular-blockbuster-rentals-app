@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SidebarContainerComponent } from './sidebar-container.component';
+import { MiniMovieListComponent } from './mini-movie-list.component';
 
-describe('SidebarContainerComponent', () => {
-  let component: SidebarContainerComponent;
-  let fixture: ComponentFixture<SidebarContainerComponent>;
+describe('MiniMovieListComponent', () => {
+  let component: MiniMovieListComponent;
+  let fixture: ComponentFixture<MiniMovieListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SidebarContainerComponent]
+      imports: [MiniMovieListComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(SidebarContainerComponent);
+    fixture = TestBed.createComponent(MiniMovieListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
