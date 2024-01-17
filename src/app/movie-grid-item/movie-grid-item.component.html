@@ -50,7 +50,7 @@
 
     <button
       *ngIf="canBeAddedToRentalCart"
-      (click)="addMovieToRentalCart()"
+      (click)="addMovieToRentalCart(movie.id)"
       mat-button
     >
       Add to Rental
