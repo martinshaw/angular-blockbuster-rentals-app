@@ -1,9 +1,15 @@
 <mat-drawer-container class="sidebar-container" autosize>
-
-  <mat-drawer #drawer class="sidebar" mode="side" [opened]="rentalCreationSidebarObservableValue.sidebarIsOpen">
-    <p>Auto-resizing sidenav</p>
-  </mat-drawer>
+  {{ rentalCreationSidebarObservableValue$ | async | json }}
+  <ng-container *ngIf="rentalCreationSidebarObservableValue$ | async as rentalCreationSidebarObservableValue; else loading">
+    <mat-drawer
+      #drawer
+      class="sidebar"
+      mode="side"
+      [opened]="rentalCreationSidebarObservableValue.sidebarIsOpen"
+    >
+      <p>Auto-resizing sidenav</p>
+    </mat-drawer>
+  </ng-container>
 
   <ng-content></ng-content>
-
 </mat-drawer-container>

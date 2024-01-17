@@ -3,7 +3,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterModule } from '@angular/router';
 import { RentalCreationSidebarFormService, RentalCreationSidebarFormServiceObservableValueType } from '../rental-creation-sidebar-form.service';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { AsyncPipe, JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-sidebar-container',
@@ -11,7 +12,9 @@ import { Subscription } from 'rxjs';
   imports: [
     RouterModule,
     MatButtonModule,
-    MatSidenavModule
+    MatSidenavModule,
+    AsyncPipe,
+    JsonPipe,
   ],
   templateUrl: './sidebar-container.component.html',
   styleUrl: './sidebar-container.component.scss',
@@ -19,32 +22,22 @@ import { Subscription } from 'rxjs';
     RentalCreationSidebarFormService,
   ],
 })
-export class SidebarContainerComponent implements OnInit, OnDestroy {
-  public rentalCreationSidebarObservableValue: RentalCreationSidebarFormServiceObservableValueType = {
-    sidebarIsOpen: false,
-  };
-  private subs: Subscription[] = [];
+export class SidebarContainerComponent implements OnInit {
+  public rentalCreationSidebarObservableValue$!: Observable<RentalCreationSidebarFormServiceObservableValueType>;
 
   constructor(
     public rentalCreationSidebarFormService: RentalCreationSidebarFormService,
   ) { }
 
-  InitSubscriptions() {
-    this.subs.push(
-      this.rentalCreationSidebarFormService.$observable.subscribe({next: (value) => {
-        console.log('SidebarContainerComponent ngOnInit 2', value);
-        this.rentalCreationSidebarObservableValue = value;
-      }})
-    );
-  }
-
   ngOnInit() {
     console.log('SidebarContainerComponent ngOnInit 1');
 
-    this.InitSubscriptions();
-  }
 
-  ngOnDestroy() {
-    this.subs.forEach(s => s.unsubscribe());
+
+    /// https://www.telerik.com/blogs/angular-basics-step-by-step-understanding-async-pipe
+
+
+
+    this.rentalCreationSidebarObservableValue$ = this.rentalCreationSidebarFormService.$observable;
   }
 }
