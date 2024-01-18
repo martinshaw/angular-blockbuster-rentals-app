@@ -2,9 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { RentalCreationSidebarFormService } from '../../services/rental-creation-sidebar-form.service';
 import { MatButtonModule } from '@angular/material/button';
-import { MovieModelType } from '../../services/database.service';
+import { RentalCreationSidebarFormService } from '../../services/rental-creation-sidebar-form.service';
+import { MovieModelType } from '../../app.types';
 
 @Component({
   selector: 'app-mini-movie-list-item',

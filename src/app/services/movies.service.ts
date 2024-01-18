@@ -1,20 +1,22 @@
 import { Injectable } from '@angular/core';
-import { DatabaseService, MovieModelType } from './database.service';
-import { Observable, liveQuery } from 'dexie';
+import { ApiService } from './api.service';
+import { MovieModelType } from '../app.types';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MoviesService {
   constructor(
-    public databaseService: DatabaseService,
+    public apiService: ApiService,
   ) { }
 
-  getAllMovies$(): Observable<MovieModelType[]> {
-    (async () => {
-      console.log('MoviesService.getAllMovies$()', await this.databaseService.movies.toArray());
-    })();
-
-    return liveQuery(() => this.databaseService.movies.toArray());
+  getAllMovies$(): Promise<MovieModelType[]> {
+    return this.apiService
+      .makeRequest<MovieModelType[]>('/movies')
+      .then((response) => response.data)
+      .catch((error) => {
+        console.error(error);
+        return [];
+      });
   }
 }

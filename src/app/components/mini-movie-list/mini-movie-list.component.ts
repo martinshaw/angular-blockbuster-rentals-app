@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MiniMovieListItemComponent } from '../mini-movie-list-item/mini-movie-list-item.component';
-import { MovieModelType } from '../../services/database.service';
+import { MovieModelType } from '../../app.types';
 
 @Component({
   selector: 'app-mini-movie-list',

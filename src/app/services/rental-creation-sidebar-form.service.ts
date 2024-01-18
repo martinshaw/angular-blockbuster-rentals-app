@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MovieModelType } from './database.service';
+import { MovieModelType } from '../app.types';
 
 @Injectable({
   providedIn: 'root'

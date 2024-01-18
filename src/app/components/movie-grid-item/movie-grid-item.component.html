@@ -1,7 +1,7 @@
 <mat-card>
   <mat-card-header class="header">
     <mat-card-title> {{ movie.title }}</mat-card-title>
-    <mat-card-subtitle>0 Available</mat-card-subtitle>
+    <mat-card-subtitle>{{ movie.count_available_for_rental }} Available for Rental of {{ movie.count_owned }}</mat-card-subtitle>
   </mat-card-header>
 
   <div class="columns">
