@@ -1,7 +1,7 @@
 <mat-card>
   <mat-card-header class="header">
     <mat-card-title> {{ movie.title }}</mat-card-title>
-    <mat-card-subtitle>{{ movie.count_available_for_rental }} Available for Rental of {{ movie.count_owned }}</mat-card-subtitle>
+    <mat-card-subtitle>{{ getCountAvailableForRentalWithPending() }} Available for Rental of {{ movie.count_owned }} Owned</mat-card-subtitle>
   </mat-card-header>
 
   <div class="columns">
@@ -48,15 +48,17 @@
   <mat-card-actions class="actions">
     <button mat-button (click)="navigate(['/movies', movie.id])">Details</button>
 
+    <div class="spacer"></div>
+
     <button
-      *ngIf="canBeAddedToRentalCart"
+      *ngIf="canBeAddedToRentalCart()"
       (click)="addMovieToRentalCart(movie)"
       mat-button
     >
       Add to Rental
     </button>
 
-    <div class="spacer"></div>
+    <!-- <div class="spacer"></div>
 
     <button
       mat-icon-button
@@ -64,6 +66,6 @@
       [title]="'More options for ' + movie.title"
     >
       <mat-icon>more_vert</mat-icon>
-    </button>
+    </button> -->
   </mat-card-actions>
 </mat-card>

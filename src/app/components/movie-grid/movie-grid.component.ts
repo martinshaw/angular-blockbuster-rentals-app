@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common'
 import { RouterModule } from '@angular/router';
 import { MoviesService } from '../../services/movies.service';
 import { MovieModelType } from '../../app.types';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-movie-grid',
@@ -12,6 +14,8 @@ import { MovieModelType } from '../../app.types';
     CommonModule,
     RouterModule,
     MovieGridItemComponent,
+    MatIconModule,
+    MatProgressSpinnerModule,
   ],
   templateUrl: './movie-grid.component.html',
   styleUrl: './movie-grid.component.scss'
@@ -26,7 +30,7 @@ export class MovieGridComponent {
   }
 
   ngOnInit() {
-    // /
+    //
   }
 
   keyMovieBy(index: number, list: MovieModelType) {

@@ -1,16 +1,22 @@
 import { Injectable } from '@angular/core';
-import { MovieModelType } from '../app.types';
+import { MovieModelType, MovieRentalPriceModelType } from '../app.types';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RentalCreationSidebarFormService {
   private sidebarIsOpen: boolean = false;
-
   private moviesPendingRental: MovieModelType[] = [];
+  private movieRentalPricePeriod: MovieRentalPriceModelType['period'] = '1 day';
 
   constructor() {
     //
+  }
+
+  public resetCreationForm() {
+    this.setSidebarIsOpen(false);
+    this.clearMoviesPendingRental();
+    this.setMovieRentalPricePeriod('1 day');
   }
 
   public setSidebarIsOpen(value: boolean = true) {
@@ -22,18 +28,14 @@ export class RentalCreationSidebarFormService {
   }
 
   public addMovieToPendingRental(movie: MovieModelType) {
-    if (this.sidebarIsOpen === false) this.setSidebarIsOpen(true);
+    if (this.sidebarIsOpen === false) this.setSidebarIsOpen(true)
 
     this.moviesPendingRental.push(movie);
   }
 
   public removeMovieFromPendingRental(movie: MovieModelType) {
-    if (this.moviesPendingRental.length === 1) this.setSidebarIsOpen(false);
+    if (this.moviesPendingRental.length === 1) this.resetCreationForm();
 
-    // This will remove all instances of the movie from the array.
-    // this.moviesPendingRental = this.moviesPendingRental.filter((m) => m.id !== movie.id);
-
-    // Only remove the first instance of the movie from the array.
     for (let i = 0; i < this.moviesPendingRental.length; i++) {
       if (this.moviesPendingRental[i].id === movie.id) {
         this.moviesPendingRental.splice(i, 1);
@@ -46,12 +48,13 @@ export class RentalCreationSidebarFormService {
     return this.moviesPendingRental;
   }
 
-  public getMoviesPendingRentalCount(): number {
+  public getMoviesPendingRentalCount(withMovie?: MovieModelType): number {
+    if (withMovie != null) this.moviesPendingRental.filter(movie => movie.id === withMovie.id).length;
+
     return this.moviesPendingRental.length;
   }
 
   public clearMoviesPendingRental() {
-    this.setSidebarIsOpen(false);
     this.moviesPendingRental = [];
   }
 
@@ -61,6 +64,14 @@ export class RentalCreationSidebarFormService {
 
   public submitPendingRental() {
     //
+  }
+
+  public getMovieRentalPricePeriod(): MovieRentalPriceModelType['period'] {
+    return this.movieRentalPricePeriod;
+  }
+
+  public setMovieRentalPricePeriod(value: MovieRentalPriceModelType['period']) {
+    this.movieRentalPricePeriod = value;
   }
 
   public getPendingRentalTotal(): number {

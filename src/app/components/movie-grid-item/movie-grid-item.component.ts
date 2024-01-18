@@ -54,9 +54,17 @@ export class MovieGridItemComponent implements OnInit, OnDestroy {
     this.ngZone.run(() => this.router.navigate(commands)).then();
   }
 
-  canBeAddedToRentalCart = true;
+  public getCountAvailableForRentalWithPending(): number {
+    if (this.movie?.count_available_for_rental == null) return 0;
 
-  addMovieToRentalCart(movie: MovieModelType) {
+    return this.movie.count_available_for_rental - this.rentalCreationSidebarFormService.getMoviesPendingRentalCount(this.movie);
+  }
+
+  public canBeAddedToRentalCart(): boolean {
+    return this.getCountAvailableForRentalWithPending() > 0;
+  }
+
+  public addMovieToRentalCart(movie: MovieModelType) {
     this.rentalCreationSidebarFormService.addMovieToPendingRental(movie);
   }
 }

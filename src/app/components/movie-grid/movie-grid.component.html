@@ -1,3 +1,9 @@
-<div *ngFor="let movie of movies$ | async; trackBy: keyMovieBy">
-  <app-movie-grid-item [movie]="movie"></app-movie-grid-item>
+<div class="container" *ngIf="movies$ | async as movies; else: loading">
+  <div class="inner" *ngFor="let movie of movies; trackBy: keyMovieBy">
+    <app-movie-grid-item [movie]="movie"></app-movie-grid-item>
+  </div>
 </div>
+
+<ng-template #loading class="loading">
+  <mat-spinner></mat-spinner>
+</ng-template>
