@@ -1,13 +1,13 @@
-import { ChangeDetectionStrategy, Component, Input, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { MatButtonModule, MatIconButton } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MovieType } from '../../app.types';
 import { SliceWordPipe } from '../../pipes/slice-word.pipe';
 import { SliceUntilFirstDotPipe } from '../../pipes/slice-until-first-dot.pipe';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { RentalCreationSidebarFormService } from '../../services/rental-creation-sidebar-form.service';
+import { MovieModelType } from '../../services/database.service';
 
 @Component({
   selector: 'app-movie-grid-item',
@@ -25,8 +25,7 @@ import { RentalCreationSidebarFormService } from '../../services/rental-creation
   styleUrl: './movie-grid-item.component.scss',
 })
 export class MovieGridItemComponent implements OnInit, OnDestroy {
-  @Input() movie!: MovieType;
-  @Input() index!: number;
+  @Input() movie!: MovieModelType;
 
   constructor(
     private ngZone: NgZone,
@@ -57,7 +56,7 @@ export class MovieGridItemComponent implements OnInit, OnDestroy {
 
   canBeAddedToRentalCart = true;
 
-  addMovieToRentalCart(movie: MovieType) {
+  addMovieToRentalCart(movie: MovieModelType) {
     this.rentalCreationSidebarFormService.addMovieToPendingRental(movie);
   }
 }

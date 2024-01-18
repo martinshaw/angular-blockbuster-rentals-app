@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject, Subscriber } from 'rxjs';
-import { MovieType } from '../app.types';
+import { MovieModelType } from './database.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +7,7 @@ import { MovieType } from '../app.types';
 export class RentalCreationSidebarFormService {
   private sidebarIsOpen: boolean = false;
 
-  private moviesPendingRental: MovieType[] = [];
+  private moviesPendingRental: MovieModelType[] = [];
 
   constructor() {
     //
@@ -22,13 +21,13 @@ export class RentalCreationSidebarFormService {
     return this.sidebarIsOpen;
   }
 
-  public addMovieToPendingRental(movie: MovieType) {
+  public addMovieToPendingRental(movie: MovieModelType) {
     if (this.sidebarIsOpen === false) this.setSidebarIsOpen(true);
 
     this.moviesPendingRental.push(movie);
   }
 
-  public removeMovieFromPendingRental(movie: MovieType) {
+  public removeMovieFromPendingRental(movie: MovieModelType) {
     if (this.moviesPendingRental.length === 1) this.setSidebarIsOpen(false);
 
     // This will remove all instances of the movie from the array.
@@ -43,7 +42,7 @@ export class RentalCreationSidebarFormService {
     }
   }
 
-  public getMoviesPendingRental(): MovieType[] {
+  public getMoviesPendingRental(): MovieModelType[] {
     return this.moviesPendingRental;
   }
 

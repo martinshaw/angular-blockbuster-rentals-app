@@ -1,10 +1,10 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, afterNextRender } from '@angular/core';
 import { MovieGridItemComponent } from '../movie-grid-item/movie-grid-item.component';
-import { CommonModule } from '@angular/common';
-import { MovieType } from '../../app.types';
+import { CommonModule } from '@angular/common'
 import { RouterModule } from '@angular/router';
-import { PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { MoviesService } from '../../services/movies.service';
+import { MovieModelType } from '../../services/database.service';
+import { Observable } from 'dexie';
 
 @Component({
   selector: 'app-movie-grid',
@@ -18,26 +18,20 @@ import { isPlatformBrowser } from '@angular/common';
   styleUrl: './movie-grid.component.scss'
 })
 export class MovieGridComponent {
-  private isBrowser: boolean = false;
-  private currentUrlOrigin: string = '';
+  public movies$ = this.moviesService.getAllMovies$();
 
   constructor(
-      @Inject(PLATFORM_ID) platformId: Object
-    ) {
-      this.isBrowser = isPlatformBrowser(platformId);
-
-      if (this.isBrowser === true) this.currentUrlOrigin = window.location.origin;
-    }
-
-  movies: MovieType[] = []
+    public moviesService: MoviesService,
+  ) {
+    //
+  }
 
   ngOnInit() {
-    if (this.currentUrlOrigin === '') return;
+    //
+    console.log('MovieGridComponent.ngOnInit()', this.movies$.subscribe(a => console.log(a)));
+  }
 
-    fetch(this.currentUrlOrigin + '/assets/movieData.json')
-      .then(response => response.json())
-      .then(data => {
-        this.movies = data as MovieType[];
-      });
+  keyMovieBy(index: number, list: MovieModelType) {
+    return `${list.id}${list.title}`;
   }
 }

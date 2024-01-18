@@ -6,8 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "serve:ssr:blockbusterRentalsApp": "node dist/blockbuster-rentals-app/server/server.mjs"
+    "test": "ng test"
   },
   "private": true,
   "dependencies": {
@@ -20,12 +19,12 @@
     "@angular/material": "^17.0.5",
     "@angular/platform-browser": "^17.0.0",
     "@angular/platform-browser-dynamic": "^17.0.0",
-    "@angular/platform-server": "^17.0.0",
     "@angular/router": "^17.0.0",
     "@angular/ssr": "^17.0.10",
     "@faker-js/faker": "^8.3.1",
-    "angular-in-memory-web-api": "^0.17.0",
+    "dexie": "^3.2.4",
     "express": "^4.18.2",
+    "indexeddbshim": "^13.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.2"

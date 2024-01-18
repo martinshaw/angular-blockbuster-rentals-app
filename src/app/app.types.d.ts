@@ -9,8 +9,8 @@ Modified: 2024-01-14T13:37:44.368Z
 Description: description
 */
 
-export type MovieType = {
-  id: number;
+export type MovieFromDataScrapingType = {
+  id?: number;
   thumbnail: string;
   title: string;
   year: string;
