@@ -57,7 +57,8 @@ export class MovieGridItemComponent implements OnInit, OnDestroy {
   public getCountAvailableForRentalWithPending(): number {
     if (this.movie?.count_available_for_rental == null) return 0;
 
-    return this.movie.count_available_for_rental - this.rentalCreationSidebarFormService.getMoviesPendingRentalCount(this.movie);
+    const count = this.movie.count_available_for_rental - this.rentalCreationSidebarFormService.getMoviesPendingRentalCount(this.movie);
+    return count < 0 ? 0 : count;
   }
 
   public canBeAddedToRentalCart(): boolean {

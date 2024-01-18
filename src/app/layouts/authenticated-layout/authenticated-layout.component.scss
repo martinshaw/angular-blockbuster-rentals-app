@@ -1,4 +1,10 @@
 .drawer-container {
   width: 100vw;
   height: 100vh;
+  overflow: hidden;
+}
+
+.header-offset {
+  overflow-y: auto;
+  height: calc(100vh - 112px);
 }

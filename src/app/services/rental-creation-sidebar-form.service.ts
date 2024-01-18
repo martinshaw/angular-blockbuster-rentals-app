@@ -49,7 +49,7 @@ export class RentalCreationSidebarFormService {
   }
 
   public getMoviesPendingRentalCount(withMovie?: MovieModelType): number {
-    if (withMovie != null) this.moviesPendingRental.filter(movie => movie.id === withMovie.id).length;
+    if (withMovie != null) return this.moviesPendingRental.filter(movie => movie.id === withMovie.id).length;
 
     return this.moviesPendingRental.length;
   }
