@@ -42,4 +42,5 @@ There are many features and improvements which would be made if this were a real
 * Improve responsive styling on 'show' pages
 * Move rental creation sidebar to bottom on small devices
 * Improve handling of dates (timezones)
+* Add substancial test coverage for each of the Angular code files
 * Much much more could be added ...
