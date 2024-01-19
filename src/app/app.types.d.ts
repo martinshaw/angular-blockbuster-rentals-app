@@ -37,7 +37,7 @@ export type MovieModelType = MovieFromDataScrapingType & {
 };
 
 export type MovieRentalPriceModelType = {
-  movieId: number;
+  movie_id: number;
   price: number;
   period:
     | '1 day'

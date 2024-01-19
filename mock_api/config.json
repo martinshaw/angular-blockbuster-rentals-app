@@ -1,0 +1,5 @@
+{
+  "port": 4202,
+  "foreignKeySuffix": "_id",
+  "routes": "./mock_api/routes.json"
+}

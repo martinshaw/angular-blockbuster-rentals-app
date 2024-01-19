@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MovieModelType, MovieRentalPriceModelType } from '../app.types';
+import { MoviesService } from './movies.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,13 @@ export class RentalCreationSidebarFormService {
   private moviesPendingRental: MovieModelType[] = [];
   private movieRentalPricePeriod: MovieRentalPriceModelType['period'] = '1 day';
 
-  constructor() {
+  private movieRentalPrices: Record<string, MovieRentalPriceModelType[]> = {};
+
+  private discounts: any[] = [];
+
+  constructor(
+    private moviesService: MoviesService,
+  ) {
     //
   }
 
@@ -17,6 +24,7 @@ export class RentalCreationSidebarFormService {
     this.setSidebarIsOpen(false);
     this.clearMoviesPendingRental();
     this.setMovieRentalPricePeriod('1 day');
+    this.setMovieRentalPricesByArray([]);
   }
 
   public setSidebarIsOpen(value: boolean = true) {
@@ -31,6 +39,8 @@ export class RentalCreationSidebarFormService {
     if (this.sidebarIsOpen === false) this.setSidebarIsOpen(true)
 
     this.moviesPendingRental.push(movie);
+
+    this.refreshMovieRentalPrices();
   }
 
   public removeMovieFromPendingRental(movie: MovieModelType) {
@@ -42,6 +52,8 @@ export class RentalCreationSidebarFormService {
         break;
       }
     }
+
+    this.refreshMovieRentalPrices();
   }
 
   public getMoviesPendingRental(): MovieModelType[] {
@@ -49,9 +61,9 @@ export class RentalCreationSidebarFormService {
   }
 
   public getMoviesPendingRentalCount(withMovie?: MovieModelType): number {
-    if (withMovie != null) return this.moviesPendingRental.filter(movie => movie.id === withMovie.id).length;
-
-    return this.moviesPendingRental.length;
+    return withMovie != null ?
+      this.moviesPendingRental.filter(movie => movie.id === withMovie.id).length :
+      this.moviesPendingRental.length;
   }
 
   public clearMoviesPendingRental() {
@@ -59,7 +71,14 @@ export class RentalCreationSidebarFormService {
   }
 
   public canSubmitPendingRental(): boolean {
-    return this.moviesPendingRental.length > 0;
+    if (this.getMoviesPendingRentalCount() <= 0) return false;
+    if (this.getMovieRentalPricePeriod() == null) return false;
+    if (['1 day', '2 days', '3 days', '1 week', '2 weeks', '3 weeks', '1 month', '2 months', '3 months'].includes(this.getMovieRentalPricePeriod()) === false) return false;
+    if (this.getPendingRentalSubtotal() < 0) return false;
+    if (this.getPendingRentalDiscount() < 0) return false;
+    if (this.getPendingRentalTotal() < 0) return false;
+
+    return true;
   }
 
   public submitPendingRental() {
@@ -72,17 +91,55 @@ export class RentalCreationSidebarFormService {
 
   public setMovieRentalPricePeriod(value: MovieRentalPriceModelType['period']) {
     this.movieRentalPricePeriod = value;
+
+    this.refreshMovieRentalPrices();
   }
 
-  public getPendingRentalTotal(): number {
-    return 0.00;
+  public getMovieRentalPrice(movie: MovieModelType): MovieRentalPriceModelType[] {
+    if (movie.id == null) return [];
+
+    return this.movieRentalPrices[movie.id] ?? [];
+  }
+
+  public getMovieRentalPrices(): Record<string, MovieRentalPriceModelType[]> {
+    return this.movieRentalPrices;
+  }
+
+  public setMovieRentalPricesByArray(prices: MovieRentalPriceModelType[]) {
+    this.movieRentalPrices = prices.reduce((prices, price) => {
+      if (prices[price.movie_id] == null) prices[price.movie_id] = [];
+      prices[price.movie_id].push(price);
+      return prices;
+    }, {} as Record<string, MovieRentalPriceModelType[]>);
+  }
+
+  public async refreshMovieRentalPrices(): Promise<void> {
+    return this.moviesService
+      .getMovieRentalPrices$(
+        this.getMoviesPendingRental().map(movie => movie.id),
+        [this.getMovieRentalPricePeriod()],
+      )
+      .then((prices) => this.setMovieRentalPricesByArray(prices))
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  public getPendingRentalSubtotal(): number {
+    return this.getMoviesPendingRental().reduce((total, movie) => {
+      const price = this.getMovieRentalPrice(movie).find(price => price.period === this.getMovieRentalPricePeriod());
+      if (price == null) return total;
+      return total + price.price;
+    },
+      0.00
+    );
   }
 
   public getPendingRentalDiscount(): number {
     return 0.00;
   }
 
-  public getPendingRentalSubtotal(): number {
-    return 0.00;
+  public getPendingRentalTotal(): number {
+    return this.getPendingRentalSubtotal() - this.getPendingRentalDiscount();
   }
 }

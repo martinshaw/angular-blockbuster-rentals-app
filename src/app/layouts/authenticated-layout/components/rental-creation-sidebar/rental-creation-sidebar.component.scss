@@ -1,5 +1,5 @@
 .sidebar {
-  width: 300px;
+  width: 400px;
   height: 100%;
   box-sizing: border-box;
   padding: 8px;
@@ -7,6 +7,31 @@
   flex-direction: column;
   gap: 8px;
   background: #eee;
+}
+
+.heading {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  font-size: .8rem;
+  color: #555;
+}
+
+.heading__left {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.heading__right {
+  //
+}
+
+.dropdown {
+  &, & > * {
+    width: 100%;
+  }
 }
 
 .scroll-container {

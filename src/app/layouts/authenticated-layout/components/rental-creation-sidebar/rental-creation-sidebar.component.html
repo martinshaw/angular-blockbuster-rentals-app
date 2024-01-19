@@ -1,27 +1,73 @@
 <div class="sidebar">
+  <div class="heading">
+    <div class="heading__left">Movies</div>
+    <div class="heading__right">
+      {{ this.rentalCreationSidebarFormService.getMoviesPendingRentalCount() }}
+      item{{
+        this.rentalCreationSidebarFormService.getMoviesPendingRentalCount() ===
+        1
+          ? ""
+          : "s"
+      }}
+    </div>
+  </div>
+
   <div class="scroll-container">
     <app-mini-movie-list
       [movies]="this.rentalCreationSidebarFormService.getMoviesPendingRental()"
     ></app-mini-movie-list>
   </div>
 
-  <div class="totals">
-    <div class="total">
-      <div class="label">Total</div>
-      <div class="value">
-        {{ this.rentalCreationSidebarFormService.getPendingRentalTotal() | currency }}
-      </div>
+  <div class="heading">
+    <div class="heading__left">Rental Period</div>
+    <div class="heading__right">{{ getReturnDate() }}</div>
+  </div>
+
+  <div class="dropdown">
+    <mat-form-field>
+      <input
+        type="text"
+        aria-label="Rental Period"
+        matInput
+        [formControl]="rentalPeriodFormControl"
+        [matAutocomplete]="rentalPeriodAutocomplete"
+        [required]="true"
+      />
+      <mat-autocomplete #rentalPeriodAutocomplete="matAutocomplete">
+        @for (option of rentalPeriodOptions; track option) {
+        <mat-option [value]="option">{{ option }}</mat-option>
+        }
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+
+  <div class="heading">
+    <div class="heading__left">Subtotal</div>
+    <div class="heading__right">
+      {{
+        this.rentalCreationSidebarFormService.getPendingRentalSubtotal()
+          | currency
+      }}
     </div>
+  </div>
+
+  <div class="totals">
     <div class="total">
       <div class="label">Discount</div>
       <div class="value">
-        {{ this.rentalCreationSidebarFormService.getPendingRentalDiscount() | currency }}
+        {{
+          this.rentalCreationSidebarFormService.getPendingRentalDiscount()
+            | currency
+        }}
       </div>
     </div>
     <div class="total">
-      <div class="label">Subtotal</div>
+      <div class="label">Total</div>
       <div class="value">
-        {{ this.rentalCreationSidebarFormService.getPendingRentalSubtotal() | currency }}
+        {{
+          this.rentalCreationSidebarFormService.getPendingRentalTotal()
+            | currency
+        }}
       </div>
     </div>
   </div>

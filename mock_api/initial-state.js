@@ -42,47 +42,47 @@ const getMovieRentalPricesTable = (movies) => {
     return [
       {
         movie_id: movie.id,
-        price: faker.number.float({ min: 2, max: 4 }).toFixed(2),
+        price: parseFloat(faker.number.float({ min: 2, max: 4 }).toFixed(2)),
         period: '1 day',
       },
       {
         movie_id: movie.id,
-        price: faker.number.float({ min: 3, max: 5 }).toFixed(2),
+        price: parseFloat(faker.number.float({ min: 3, max: 5 }).toFixed(2)),
         period: '2 days',
       },
       {
         movie_id: movie.id,
-        price: faker.number.float({ min: 4, max: 6 }).toFixed(2),
+        price: parseFloat(faker.number.float({ min: 4, max: 6 }).toFixed(2)),
         period: '3 days',
       },
       {
         movie_id: movie.id,
-        price: faker.number.float({ min: 5, max: 7 }).toFixed(2),
+        price: parseFloat(faker.number.float({ min: 5, max: 7 }).toFixed(2)),
         period: '1 week',
       },
       {
         movie_id: movie.id,
-        price: faker.number.float({ min: 9, max: 11 }).toFixed(2),
+        price: parseFloat(faker.number.float({ min: 9, max: 11 }).toFixed(2)),
         period: '2 weeks',
       },
       {
         movie_id: movie.id,
-        price: faker.number.float({ min: 13, max: 15 }).toFixed(2),
+        price: parseFloat(faker.number.float({ min: 13, max: 15 }).toFixed(2)),
         period: '3 weeks',
       },
       {
         movie_id: movie.id,
-        price: faker.number.float({ min: 16, max: 18 }).toFixed(2),
+        price: parseFloat(faker.number.float({ min: 16, max: 18 }).toFixed(2)),
         period: '1 month',
       },
       {
         movie_id: movie.id,
-        price: faker.number.float({ min: 30, max: 33 }).toFixed(2),
+        price: parseFloat(faker.number.float({ min: 30, max: 33 }).toFixed(2)),
         period: '2 months',
       },
       {
         movie_id: movie.id,
-        price: faker.number.float({ min: 40, max: 43 }).toFixed(2),
+        price: parseFloat(faker.number.float({ min: 40, max: 43 }).toFixed(2)),
         period: '3 months',
       },
     ];

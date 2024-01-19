@@ -15,19 +15,37 @@ export class ApiService {
 
   private defaultApiUrl = 'http://localhost:4202';
 
-  private prepareUrl(url: string) {
+  private prepareUrl(url: string, urlParams?: Record<string, string | string[]>) {
     if (url.startsWith('/') === false) url = `/${url}`;
+    url = `/api${url}`;
 
-    // TODO: Get from cookie
+    // TODO: Get host from cookie
 
-    return `${this.defaultApiUrl}${url}`;
+    let urlSearchParamsString = '';
+    if (urlParams != null) {
+      const urlSearchParams = new URLSearchParams();
+
+      for (const [key, value] of Object.entries(urlParams)) {
+        if (Array.isArray(value)) {
+          [...new Set(value)].forEach((item) => urlSearchParams.append(key, item));
+        }
+        else {
+          urlSearchParams.append(key, value);
+        }
+      }
+
+      urlSearchParamsString = urlSearchParams.toString();
+    }
+
+    return `${this.defaultApiUrl}${url}?${urlSearchParamsString}`;
   }
 
   public async makeRequest<TResponseDataType extends any[]>(
     url: string,
     method: 'GET' | 'POST' | 'PUT' | 'DELETE' = 'GET',
+    urlParams?: Record<string, string | string[]>,
   ): Promise<ApiResponseType<TResponseDataType>> {
-    return fetch(this.prepareUrl(url), {
+    return fetch(this.prepareUrl(url, urlParams), {
       method,
     })
       .then((response) => response.json())
