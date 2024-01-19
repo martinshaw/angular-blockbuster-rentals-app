@@ -12,6 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { CustomerModelType, MovieRentalPriceModelType } from '../../../../app.types';
 import { CustomersService } from '../../../../services/customers.service';
 import { UtilitiesService } from '../../../../services/utilities.service';
+import { AutofocusDirective } from '../../../../directives/autofocus.directive';
 
 
 @Component({

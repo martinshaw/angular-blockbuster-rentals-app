@@ -2,12 +2,26 @@
   margin-bottom: 16px;
 }
 
+.center {
+ &, & * {
+  align-items: center;
+  text-align: center;
+ }
+
+ .header {
+  flex: 1;
+ }
+}
+
 .columns {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   gap: 16px;
+
+  flex: 1;
+  width: 100%;
 
   > .columns__column {
     &--left {
@@ -49,6 +63,10 @@
       }
     }
   }
+}
+
+.barcode {
+  padding: 0 16px;
 }
 
 .actions {

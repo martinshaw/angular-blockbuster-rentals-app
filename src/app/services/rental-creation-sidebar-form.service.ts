@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { CustomerModelType, MovieModelType, MovieRentalPriceModelType } from '../app.types';
+import { CustomerModelType, MovieModelType, MovieRentalPriceModelType, RentalModelType } from '../app.types';
 import { MoviesService } from './movies.service';
 import { RentalsService } from './rentals.service';
 import { UtilitiesService } from './utilities.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,7 @@ export class RentalCreationSidebarFormService {
     private moviesService: MoviesService,
     private rentalsService: RentalsService,
     private utilitiesService: UtilitiesService,
+    private router: Router,
   ) {
     //
   }
@@ -132,19 +134,12 @@ export class RentalCreationSidebarFormService {
     if (movies == null) return;
     if (movies.length <= 0) return;
 
-    console.log('RentalCreationSidebarFormService.submitPendingRental()');
-    console.log('customer', this.customer);
-    console.log('movies', this.moviesPendingRental);
-    console.log('period', this.getMovieRentalPricePeriod());
-    console.log('subtotal', this.getPendingRentalSubtotal());
-    console.log('discount', this.getPendingRentalDiscount());
-    console.log('total', this.getPendingRentalTotal());
-
     const newRental = await this.rentalsService.createRental$(
       customer,
       this.utilitiesService.getDateTodayPlusDays(),
       this.utilitiesService.getDateTodayPlusDays(this.rentalPeriodNumberOfDays[this.getMovieRentalPricePeriod()]),
       null,
+      this.getMovieRentalPricePeriod(),
     );
 
     if (newRental == null) {
@@ -153,16 +148,34 @@ export class RentalCreationSidebarFormService {
       return;
     }
 
-    const newRentalMovies = await Promise.all(this.rentalsService.addMoviesToRental$(newRental, movies));
-
     /**
      * In reality, the counts on the Movie models would be cached counts from a separate table of
      * individual items owned by Blockbuster.
      * For this demo application, we will just update the counts on the Movie models.
      */
-    newRentalMovies.forEach((rentalMoviePivot) => {
-      const movie = await this.moviesService.get
+
+    const newRentalMovies = await Promise.all(this.rentalsService.addMoviesToRental$(newRental, movies));
+
+    const movieQuantityCount = newRentalMovies.reduce((counts, movieRentalPivot) => {
+      if (movieRentalPivot?.movie_id == null) return counts;
+
+      if (counts[movieRentalPivot.movie_id] == null) counts[movieRentalPivot.movie_id] = 0;
+      counts[movieRentalPivot.movie_id]++;
+      return counts;
+    }, {} as Record<string, number>);
+
+    const moviesInNewRental = await this.moviesService.getMoviesByIds$(Object.keys(movieQuantityCount).map(movieId => parseInt(movieId)));
+
+    moviesInNewRental.forEach(movie => {
+      if (movie.id == null) return;
+
+      movie.count_available_for_rental -= movieQuantityCount[movie.id];
+      this.moviesService.updateMovie$(movie);
     });
+
+    this.router.navigate(['/rentals', newRental.id]);
+
+    this.resetCreationForm();
   }
 
   public getMovieRentalPricePeriod(): MovieRentalPriceModelType['period'] {
@@ -222,5 +235,18 @@ export class RentalCreationSidebarFormService {
 
   public getPendingRentalTotal(): number {
     return this.getPendingRentalSubtotal() - this.getPendingRentalDiscount();
+  }
+
+  public returnItemFromRental(
+    movie: MovieModelType,
+    rental: RentalModelType,
+  ) {
+    if (movie == null) return false;
+    if (rental == null) return false;
+
+    // TODO: Implement this feature after deadline
+    alert('This feature is not yet implemented.')
+
+    return true;
   }
 }

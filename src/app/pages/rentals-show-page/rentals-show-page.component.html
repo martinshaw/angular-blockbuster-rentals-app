@@ -1,1 +1,105 @@
-<p>rentals-show-page works!</p>
+<div class="container" *ngIf="rental$ | async as rental; else loading">
+  <div *ngIf="rental != null; else loading" class="inner">
+    <div class="top-row">
+      <mat-card *ngIf="rental.customer != null">
+        <mat-card-header>
+          <mat-card-title> {{ rental.customer.name }}</mat-card-title>
+          <mat-card-subtitle>Customer </mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+          <div class="details">
+            <div class="detail">
+              <div class="detail__heading">Email Address</div>
+              <div>{{ rental.customer.email }}</div>
+            </div>
+            <div class="detail">
+              <div class="detail__heading">Address</div>
+              <div>
+                {{ rental.customer.address_line_2 }},<br />
+                {{ rental.customer.address_line_1 }},<br />
+                {{ rental.customer.city }},<br />
+                {{ rental.customer.region }},<br />
+                {{ rental.customer.postal_code }},<br />
+                {{ rental.customer.country }}
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card *ngIf="rental.start_date_at != null">
+        <mat-card-header>
+          <mat-card-title>
+            {{ rental.period }}
+          </mat-card-title>
+          <mat-card-subtitle> Rental Details </mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+          <div class="details">
+            <div class="detail">
+              <div class="detail__heading">Rental Started from</div>
+              <div>{{ rental.start_date_at | date : "long" : "en-GB" }}</div>
+            </div>
+
+            <div class="detail">
+              <div class="detail__heading">Should be Returned by</div>
+              <div>{{ rental.end_date_at | date : "long" : "en-GB" }}</div>
+            </div>
+
+            <div class="detail" *ngIf="rental.return_date_at != null">
+              <div class="detail__heading">Was Returned on</div>
+              <div>{{ rental.return_date_at | date : "long" : "en-GB" }}</div>
+            </div>
+
+            <div class="detail" *ngIf="rentalOverdueByDays < 0">
+              <div class="detail__heading">Is Due in</div>
+              <div>{{ -rentalOverdueByDays }} days</div>
+            </div>
+
+            <div class="detail" *ngIf="rentalOverdueByDays > 0">
+              <div class="detail__heading">Is Overdue by</div>
+              <div>{{ rentalOverdueByDays }} days</div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <mat-card>
+      <mat-card-header class="card-header-without-content">
+        <mat-card-title>
+          {{ numberOfItemsRented }} Item{{
+            numberOfItemsRented === 1 ? "" : "s"
+          }}
+        </mat-card-title>
+        <mat-card-subtitle> Movies Rented </mat-card-subtitle>
+      </mat-card-header>
+    </mat-card>
+
+    <div class="movie-grid">
+      <div *ngFor="let item of rental.rentalMoviePivot || []">
+        <div *ngIf="movies[item.movie_id] != null">
+          <app-movie-grid-item
+            [movie]="movies[item.movie_id]"
+            [showAvailability]="false"
+            [showStatistics]="false"
+            [showDescription]="false"
+            [showBarcode]="true"
+            [showAddToRentalCartButton]="false"
+            [showReturnItemButton]="true"
+            [center]="true"
+            [rental]="rental"
+          ></app-movie-grid-item>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loading>
+  <div class="loading">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>

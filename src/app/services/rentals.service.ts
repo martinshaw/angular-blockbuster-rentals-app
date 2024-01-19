@@ -12,7 +12,10 @@ export class RentalsService {
 
   getAllRentals$(): Promise<RentalModelType[]> {
     return this.apiService
-      .makeRequest<RentalModelType[]>('/rentals', 'GET', { _expand: 'customer' })
+      .makeRequest<RentalModelType[]>('/rentals', 'GET', {
+        _expand: ['customer'],
+        _embed: ['rentalMoviePivot'],
+      })
       .then((response) => response.data)
       .catch((error) => {
         console.error(error);
@@ -24,7 +27,10 @@ export class RentalsService {
     if (rentalId == null) return Promise.resolve(null);
 
     return this.apiService
-      .makeRequest<RentalModelType>(`/rentals/${rentalId}`, 'GET', { _expand: 'customer' })
+      .makeRequest<RentalModelType>(`/rentals/${rentalId}`, 'GET', {
+        _expand: ['customer'],
+        _embed: ['rentalMoviePivot'],
+      })
       .then((response) => response.data)
       .catch((error) => {
         console.error(error);
@@ -36,7 +42,8 @@ export class RentalsService {
     return this.apiService
       .makeRequest<RentalModelType[]>('/rentals', 'GET', {
         q: searchTerm,
-        _expand: 'customer'
+        _expand: ['customer'],
+        _embed: ['rentalMoviePivot'],
       })
       .then((response) => response.data)
       .catch((error) => {
@@ -50,6 +57,7 @@ export class RentalsService {
     startDateAt: Date | null = null,
     endDateAt: Date | null = null,
     returnDateAt: Date | null = null,
+    period: RentalModelType['period'] = '1 day',
   ): Promise<RentalModelType | null> {
     return this.apiService
       .makeRequest<RentalModelType>('/rentals', 'POST', {
@@ -59,6 +67,7 @@ export class RentalsService {
         start_date_at: startDateAt,
         end_date_at: endDateAt,
         return_date_at: returnDateAt,
+        period,
       })
       .then((response) => response.data)
       .catch((error) => {
@@ -72,7 +81,7 @@ export class RentalsService {
     movies: MovieModelType[],
   ): Promise<RentalMoviePivotModelType | null>[] {
     return movies.map((movie) => {
-      return this.apiService.makeRequest<RentalMoviePivotModelType>(`/rentals/${rental.id}/movies`, 'POST', {
+      return this.apiService.makeRequest<RentalMoviePivotModelType>(`/rentals/movies`, 'POST', {
         _expand: 'movie',
       }, {
         movie_id: movie.id,

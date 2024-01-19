@@ -1,5 +1,4 @@
 <mat-toolbar color="primary">
-
   <img class="logo" src="/assets/Blockbuster_logo.svg" height="40" />
 
   <span>{{ title }}</span>
@@ -21,14 +20,17 @@
   >
     <mat-icon>share</mat-icon>
   </button> -->
-
 </mat-toolbar>
 
 <nav mat-tab-nav-bar [backgroundColor]="'primary'" [tabPanel]="tabPanel">
-  @for (link of linkCaptions; track link) {
-    <a mat-tab-link
-      (click)="changeActiveLink(link)"
-      [active]="activeLink == link"> {{link}} </a>
+  @for (linkCaption of linkCaptions; track linkCaption) {
+  <a
+    mat-tab-link
+    (click)="onTabClick(linkCaption)"
+    [active]="isTabActive(linkCaption)"
+  >
+    {{ linkCaption }}
+  </a>
   }
 </nav>
 

@@ -46,8 +46,12 @@ export class HeaderComponent implements OnInit {
     this.onToggleSidebar.emit();
   }
 
-  changeActiveLink(newLink: (typeof this.linkCaptions[number])) {
+  onTabClick(newLink: (typeof this.linkCaptions[number])) {
     this.router.navigate([this.links[newLink]]);
     this.activeLink = newLink;
+  }
+
+  isTabActive(linkCaption: (typeof this.linkCaptions[number])) {
+    return this.router.url.startsWith(this.links[linkCaption])
   }
 }

@@ -42,7 +42,7 @@ export class ApiService {
 
   public async makeRequest<TResponseDataType extends any[] | Record<string, any>>(
     url: string,
-    method: 'GET' | 'POST' | 'PUT' | 'DELETE' = 'GET',
+    method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' = 'GET',
     urlParams?: Record<string, string | string[]>,
     formBodyParams?: Record<string, any>,
   ): Promise<ApiResponseType<TResponseDataType>> {

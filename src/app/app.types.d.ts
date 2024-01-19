@@ -73,11 +73,13 @@ export type RentalModelType = {
   end_date_at: Date | null;
   return_date_at: Date | null;
 
+  period: MovieRentalPriceModelType['period'];
+
   customer_id: number;
-  count_movies: number;
 
   customer?: CustomerModelType;
-  movies?: MovieModelType[];
+  // If the mock API allowed, I would alias this as `movies` and include the `movies` model as a nested many-to-many pivot relationship
+  rentalMoviePivot?: RentalMoviePivotModelType[];
 };
 
 export type RentalMoviePivotModelType = {

@@ -1,14 +1,17 @@
-<mat-card>
+<mat-card [class]="center ? 'center' : ''">
   <mat-card-header class="header">
     <mat-card-title> {{ movie.title }}</mat-card-title>
-    <mat-card-subtitle
-      >{{ getCountAvailableForRentalWithPending() }} Available for Rental of
-      {{ movie.count_owned }} Owned</mat-card-subtitle
-    >
+    <mat-card-subtitle *ngIf="showAvailability">
+      {{ getCountAvailableForRentalWithPending() }} Available for Rental of
+      {{ movie.count_owned }} Owned
+    </mat-card-subtitle>
   </mat-card-header>
 
   <div class="columns">
-    <div class="columns__column columns__column--left">
+    <div
+      class="columns__column columns__column--left"
+      *ngIf="showStatistics || showDescription"
+    >
       <mat-card-content class="content">
         <mat-card-subtitle class="content__details">
           <div class="content__details__detail">
@@ -21,7 +24,7 @@
           </div>
           <div class="content__details__detail">
             <div>Duration</div>
-            <div>{{ movie?.length?.h || 0 }}h {{ movie?.length?.m || 0 }}m</div>
+            <div>{{ movie.length.h || 0 }}h {{ movie.length.m || 0 }}m</div>
           </div>
           <div class="content__details__detail">
             <div>IMDB Rating</div>
@@ -38,6 +41,7 @@
         </p>
       </mat-card-content>
     </div>
+
     <div class="columns__column columns__column--right">
       <img
         mat-card-image
@@ -48,29 +52,25 @@
     </div>
   </div>
 
-  <mat-card-actions class="actions">
-    <!-- <button mat-button (click)="navigate(['/movies', movie.id])">
-      Details
-    </button> -->
+  <div *ngIf="showBarcode" class="barcode">Barcode: {{ movie.barcode }}</div>
 
+  <mat-card-actions class="actions">
     <div class="spacer"></div>
 
     <button
-      *ngIf="canBeAddedToRentalCart()"
+      *ngIf="canBeAddedToRentalCart() && showAddToRentalCartButton"
       (click)="addMovieToRentalCart(movie)"
       mat-button
     >
       Add to Rental
     </button>
 
-    <!-- <div class="spacer"></div>
-
     <button
-      mat-icon-button
-      [ariaLabel]="'More options for ' + movie.title"
-      [title]="'More options for ' + movie.title"
+      *ngIf="showReturnItemButton && rental != null"
+      (click)="returnItemFromRental(movie)"
+      mat-button
     >
-      <mat-icon>more_vert</mat-icon>
-    </button> -->
+      Return Item
+    </button>
   </mat-card-actions>
 </mat-card>

@@ -4,6 +4,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
 import { RentalModelType } from '../../app.types';
 import { RentalsService } from '../../services/rentals.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-rentals-index-page',
@@ -32,6 +33,8 @@ export class RentalsIndexPageComponent implements OnInit {
 
   constructor(
     public rentalsService: RentalsService,
+    private router: Router,
+    private route: ActivatedRoute,
   ) {
     //
   }
@@ -40,5 +43,9 @@ export class RentalsIndexPageComponent implements OnInit {
     this.rentalsService.getAllRentals$().then((rentals) => {
       this.rentalRows = rentals;
     });
+  }
+
+  navigateToRental(rental: RentalModelType) {
+    this.router.navigate(['/rentals', rental.id])
   }
 }

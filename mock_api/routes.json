@@ -4,5 +4,7 @@
   "/movies/rental-prices?movie_id=:movie_id": "/movieRentalPrices?movie_id=:movie_id",
   "/movies/rental-prices?price=:price": "/movieRentalPrices?price=:price",
   "/movies/rental-prices?period=:period": "/movieRentalPrices?period=:period",
-  "/rentals/:id/movies": "/rentalMoviePivot?rental_id=:id"
+  "/rentals/:id/movies": "/rentalMoviePivot?rental_id=:id",
+  "/rentals/movies": "/rentalMoviePivot",
+  "/rentals/movies?_expand=movie": "/rentalMoviePivot?_expand=movie"
 }

@@ -23,7 +23,7 @@ export class MoviesService {
   getMoviesByIds$(movieIds: MovieModelType['id'][]): Promise<MovieModelType[]> {
     return this.apiService
       .makeRequest<MovieModelType[]>(`/movies`, 'GET', {
-        movie_id: movieIds.filter(id => id != null).map(id => id?.toString()) as string[],
+        id: movieIds.filter(id => id != null).map(id => id?.toString()) as string[],
       })
       .then((response) => response.data)
       .catch((error) => {
@@ -34,7 +34,7 @@ export class MoviesService {
 
   updateMovie$(movie: MovieModelType): Promise<MovieModelType | null> {
     return this.apiService
-      .makeRequest<MovieModelType>(`/movies/${movie.id}`, 'PUT', {}, movie)
+      .makeRequest<MovieModelType>(`/movies/${movie.id}`, 'PATCH', {}, movie)
       .then((response) => response.data)
       .catch((error) => {
         console.error(error);

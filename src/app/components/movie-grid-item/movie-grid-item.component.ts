@@ -7,7 +7,7 @@ import { MatButtonModule, MatIconButton } from '@angular/material/button';
 import { SliceWordPipe } from '../../pipes/slice-word.pipe';
 import { SliceUntilFirstDotPipe } from '../../pipes/slice-until-first-dot.pipe';
 import { RentalCreationSidebarFormService } from '../../services/rental-creation-sidebar-form.service';
-import { MovieModelType } from '../../app.types';
+import { MovieModelType, RentalModelType } from '../../app.types';
 
 @Component({
   selector: 'app-movie-grid-item',
@@ -26,6 +26,14 @@ import { MovieModelType } from '../../app.types';
 })
 export class MovieGridItemComponent implements OnInit, OnDestroy {
   @Input() movie!: MovieModelType;
+  @Input() showAvailability: boolean = true;
+  @Input() showStatistics: boolean = true;
+  @Input() showDescription: boolean = true;
+  @Input() showBarcode: boolean = false;
+  @Input() showAddToRentalCartButton: boolean = true;
+  @Input() showReturnItemButton: boolean = false;
+  @Input() center: boolean = false;
+  @Input() rental: RentalModelType | null = null;
 
   constructor(
     private ngZone: NgZone,
@@ -67,6 +75,12 @@ export class MovieGridItemComponent implements OnInit, OnDestroy {
 
   public addMovieToRentalCart(movie: MovieModelType) {
     this.rentalCreationSidebarFormService.addMovieToPendingRental(movie);
+  }
+
+  public returnItemFromRental(movie: MovieModelType) {
+    if (this.rental == null) return;
+
+    this.rentalCreationSidebarFormService.returnItemFromRental(movie, this.rental);
   }
 }
 
