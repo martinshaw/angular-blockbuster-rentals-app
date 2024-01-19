@@ -8,6 +8,10 @@
 <h2>Created by Martin Shaw to demonstrate Angular abilities for RealityMine role</h2>
 </center>
 
+## Click here to watch a demonstration of the app:
+
+https://vimeo.com/904528133?share=copy
+
 ## Setup on your own machine
 
 1. Run `npm run start` to start the Angular server
