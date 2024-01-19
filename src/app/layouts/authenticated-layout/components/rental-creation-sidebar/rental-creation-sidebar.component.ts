@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CustomerModelType, MovieRentalPriceModelType } from '../../../../app.types';
 import { CustomersService } from '../../../../services/customers.service';
+import { UtilitiesService } from '../../../../services/utilities.service';
 
 
 @Component({
@@ -38,21 +39,11 @@ export class RentalCreationSidebarComponent implements OnInit {
   customerOptions: CustomerModelType[] = [];
 
   rentalPeriodFormControl = new FormControl<MovieRentalPriceModelType['period']>('1 day');
-  rentalPeriodOptions: MovieRentalPriceModelType['period'][] = [
-    '1 day',
-    '2 days',
-    '3 days',
-    '1 week',
-    '2 weeks',
-    '3 weeks',
-    '1 month',
-    '2 months',
-    '3 months',
-  ];
 
   constructor(
     public customerService: CustomersService,
     public rentalCreationSidebarFormService: RentalCreationSidebarFormService,
+    public utilitiesService: UtilitiesService,
   ) { }
 
   ngOnInit(): void {
@@ -76,41 +67,13 @@ export class RentalCreationSidebarComponent implements OnInit {
     this.rentalCreationSidebarFormService.setCustomer(customer);
   }
 
-  private getDateTodayPlusDays(days: number = 0): Date {
-    const date = new Date();
-    date.setDate(date.getDate() + days);
-    return date;
-  }
-
-  private formatWithOrdinal(n: number): string {
-    const s = ['th', 'st', 'nd', 'rd'];
-    const v = n % 100;
-    return n + (s[(v - 20) % 10] || s[v] || s[0]);
-  };
-
-  private formatReturnDateRange(from: Date, caption?: string) {
-    if (caption == null) caption = from.toLocaleString('default', { weekday: 'long' });
-    return `${caption} ${this.formatWithOrdinal(from.getUTCDate())} ${from.toLocaleString('default', { month: 'long' })}`;
-  }
-
   public getReturnDate(): string {
-    const numberOfDays: Record<MovieRentalPriceModelType['period'], number> = {
-      '1 day': 1,
-      '2 days': 2,
-      '3 days': 3,
-      '1 week': 7,
-      '2 weeks': 14,
-      '3 weeks': 21,
-      '1 month': 30,
-      '2 months': 60,
-      '3 months': 90,
-    };
 
     if (this.rentalPeriodFormControl.value == null) return '';
-    if (numberOfDays[this.rentalPeriodFormControl.value] == null) return '';
+    if (this.rentalCreationSidebarFormService.rentalPeriodNumberOfDays[this.rentalPeriodFormControl.value] == null) return '';
 
-    return this.formatReturnDateRange(
-      this.getDateTodayPlusDays(numberOfDays[this.rentalPeriodFormControl.value]),
+    return this.utilitiesService.formatReturnDateRange(
+      this.utilitiesService.getDateTodayPlusDays(this.rentalCreationSidebarFormService.rentalPeriodNumberOfDays[this.rentalPeriodFormControl.value]),
       this.rentalPeriodFormControl.value === '1 day' ? 'Tomorrow' : undefined,
     );
   };

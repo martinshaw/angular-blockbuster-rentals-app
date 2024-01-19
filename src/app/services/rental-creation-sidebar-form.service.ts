@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { CustomerModelType, MovieModelType, MovieRentalPriceModelType } from '../app.types';
 import { MoviesService } from './movies.service';
+import { RentalsService } from './rentals.service';
+import { UtilitiesService } from './utilities.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,9 +21,35 @@ export class RentalCreationSidebarFormService {
 
   constructor(
     private moviesService: MoviesService,
+    private rentalsService: RentalsService,
+    private utilitiesService: UtilitiesService,
   ) {
     //
   }
+
+  readonly rentalPeriodOptions: MovieRentalPriceModelType['period'][] = [
+    '1 day',
+    '2 days',
+    '3 days',
+    '1 week',
+    '2 weeks',
+    '3 weeks',
+    '1 month',
+    '2 months',
+    '3 months',
+  ];
+
+  readonly rentalPeriodNumberOfDays: Record<MovieRentalPriceModelType['period'], number> = {
+    '1 day': 1,
+    '2 days': 2,
+    '3 days': 3,
+    '1 week': 7,
+    '2 weeks': 14,
+    '3 weeks': 21,
+    '1 month': 30,
+    '2 months': 60,
+    '3 months': 90,
+  };
 
   public resetCreationForm() {
     this.setSidebarIsOpen(false);
@@ -94,8 +122,32 @@ export class RentalCreationSidebarFormService {
     return true;
   }
 
-  public submitPendingRental() {
-    //
+  public async submitPendingRental() {
+    if (this.canSubmitPendingRental() === false) return;
+
+    const customer = this.getCustomer();
+    if (customer == null) return;
+
+    const movies = this.getMoviesPendingRental();
+    if (movies == null) return;
+    if (movies.length <= 0) return;
+
+    console.log('RentalCreationSidebarFormService.submitPendingRental()');
+    console.log('customer', this.customer);
+    console.log('movies', this.moviesPendingRental);
+    console.log('period', this.getMovieRentalPricePeriod());
+    console.log('subtotal', this.getPendingRentalSubtotal());
+    console.log('discount', this.getPendingRentalDiscount());
+    console.log('total', this.getPendingRentalTotal());
+
+    const newRental = await this.rentalsService.createRental$(
+      customer,
+      this.utilitiesService.getDateTodayPlusDays(),
+      this.utilitiesService.getDateTodayPlusDays(this.rentalPeriodNumberOfDays[this.getMovieRentalPricePeriod()]),
+      null,
+    );
+
+    console.log('newRental', newRental);
   }
 
   public getMovieRentalPricePeriod(): MovieRentalPriceModelType['period'] {

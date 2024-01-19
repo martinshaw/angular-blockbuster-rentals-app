@@ -76,6 +76,7 @@ export type RentalModelType = {
   customer_id: number;
   count_movies: number;
 
+  customer?: CustomerModelType;
   movies?: MovieModelType[];
 };
 

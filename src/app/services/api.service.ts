@@ -44,9 +44,14 @@ export class ApiService {
     url: string,
     method: 'GET' | 'POST' | 'PUT' | 'DELETE' = 'GET',
     urlParams?: Record<string, string | string[]>,
+    formBodyParams?: Record<string, any>,
   ): Promise<ApiResponseType<TResponseDataType>> {
     return fetch(this.prepareUrl(url, urlParams), {
       method,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: formBodyParams == null ? undefined : JSON.stringify(formBodyParams),
     })
       .then((response) => response.json())
       .then((data) => ({ data, status: 200 }))

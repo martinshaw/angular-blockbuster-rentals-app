@@ -1,4 +1,4 @@
-import { AsyncPipe, CommonModule } from '@angular/common';
+import { AsyncPipe, CommonModule, DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
@@ -13,6 +13,7 @@ import { RentalsService } from '../../services/rentals.service';
     MatTableModule,
     MatProgressSpinnerModule,
     AsyncPipe,
+    DatePipe,
   ],
   templateUrl: './rentals-index-page.component.html',
   styleUrl: './rentals-index-page.component.scss'

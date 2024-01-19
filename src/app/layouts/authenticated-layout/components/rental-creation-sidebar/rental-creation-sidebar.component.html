@@ -61,7 +61,7 @@
         [required]="true"
       />
       <mat-autocomplete #rentalPeriodAutocomplete="matAutocomplete">
-        @for (option of rentalPeriodOptions; track option) {
+        @for (option of this.rentalCreationSidebarFormService.rentalPeriodOptions; track option) {
         <mat-option [value]="option">{{ option }}</mat-option>
         }
       </mat-autocomplete>
