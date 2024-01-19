@@ -18,7 +18,7 @@ export const routes: Routes = [
       { path: 'rentals/:id', component: RentalsShowPageComponent },
       { path: 'customers', component: CustomersIndexPageComponent },
       { path: 'customers/:id', component: CustomersShowPageComponent },
+      { path: '**', component: PageNotFoundPageComponent },  // Wildcard route for a 404 page
     ]
   },
-  { path: '**', component: PageNotFoundPageComponent },  // Wildcard route for a 404 page
 ];

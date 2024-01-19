@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
@@ -5,6 +6,7 @@ import { RouterModule } from '@angular/router';
   selector: 'app-page-not-found-page',
   standalone: true,
   imports: [
+    CommonModule,
     RouterModule,
   ],
   templateUrl: './page-not-found-page.component.html',
