@@ -21,7 +21,7 @@
           </div>
           <div class="content__details__detail">
             <div>Duration</div>
-            <div>{{ movie.length.h }}h {{ movie.length.m }}m</div>
+            <div>{{ movie?.length?.h || 0 }}h {{ movie?.length?.m || 0 }}m</div>
           </div>
           <div class="content__details__detail">
             <div>IMDB Rating</div>

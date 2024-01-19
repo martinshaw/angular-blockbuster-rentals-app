@@ -81,7 +81,9 @@ export type RentalModelType = {
 };
 
 export type RentalMoviePivotModelType = {
-  rentalId: number;
-  movieId: number;
-  returnDateAt: Date | null;
+  rental_id: number;
+  movie_id: number;
+  return_date_at: Date | null;
+
+  movie?: MovieModelType;
 };

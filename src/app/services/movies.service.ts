@@ -20,6 +20,28 @@ export class MoviesService {
       });
   }
 
+  getMoviesByIds$(movieIds: MovieModelType['id'][]): Promise<MovieModelType[]> {
+    return this.apiService
+      .makeRequest<MovieModelType[]>(`/movies`, 'GET', {
+        movie_id: movieIds.filter(id => id != null).map(id => id?.toString()) as string[],
+      })
+      .then((response) => response.data)
+      .catch((error) => {
+        console.error(error);
+        return [];
+      });
+  }
+
+  updateMovie$(movie: MovieModelType): Promise<MovieModelType | null> {
+    return this.apiService
+      .makeRequest<MovieModelType>(`/movies/${movie.id}`, 'PUT', {}, movie)
+      .then((response) => response.data)
+      .catch((error) => {
+        console.error(error);
+        return null;
+      });
+  }
+
   getMovieRentalPrices$(movieIds: MovieModelType['id'][], periods: MovieRentalPriceModelType['period'][]): Promise<MovieRentalPriceModelType[]> {
     return this.apiService
       .makeRequest<MovieRentalPriceModelType[]>(

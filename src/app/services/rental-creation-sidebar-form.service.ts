@@ -147,7 +147,22 @@ export class RentalCreationSidebarFormService {
       null,
     );
 
-    console.log('newRental', newRental);
+    if (newRental == null) {
+      // In a real application, we would want to display an error message to the user and log the error in the backend.
+      console.error('An error occurred while creating the rental.');
+      return;
+    }
+
+    const newRentalMovies = await Promise.all(this.rentalsService.addMoviesToRental$(newRental, movies));
+
+    /**
+     * In reality, the counts on the Movie models would be cached counts from a separate table of
+     * individual items owned by Blockbuster.
+     * For this demo application, we will just update the counts on the Movie models.
+     */
+    newRentalMovies.forEach((rentalMoviePivot) => {
+      const movie = await this.moviesService.get
+    });
   }
 
   public getMovieRentalPricePeriod(): MovieRentalPriceModelType['period'] {
