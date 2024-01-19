@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-export type ApiResponseType<TResponseDataType extends any[]> = {
+export type ApiResponseType<TResponseDataType extends any[] | Record<string, any>> = {
   data: TResponseDataType;
   status: number;
 };
@@ -40,7 +40,7 @@ export class ApiService {
     return `${this.defaultApiUrl}${url}?${urlSearchParamsString}`;
   }
 
-  public async makeRequest<TResponseDataType extends any[]>(
+  public async makeRequest<TResponseDataType extends any[] | Record<string, any>>(
     url: string,
     method: 'GET' | 'POST' | 'PUT' | 'DELETE' = 'GET',
     urlParams?: Record<string, string | string[]>,

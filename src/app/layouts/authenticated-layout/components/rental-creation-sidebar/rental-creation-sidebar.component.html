@@ -46,7 +46,7 @@
     <div class="heading__right">
       {{
         this.rentalCreationSidebarFormService.getPendingRentalSubtotal()
-          | currency
+          | currency:'GBP'
       }}
     </div>
   </div>
@@ -57,7 +57,7 @@
       <div class="value">
         {{
           this.rentalCreationSidebarFormService.getPendingRentalDiscount()
-            | currency
+            | currency:'GBP'
         }}
       </div>
     </div>
@@ -66,7 +66,7 @@
       <div class="value">
         {{
           this.rentalCreationSidebarFormService.getPendingRentalTotal()
-            | currency
+            | currency:'GBP'
         }}
       </div>
     </div>

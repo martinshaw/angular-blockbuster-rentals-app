@@ -1,4 +1,5 @@
-const { faker } = require('@faker-js/faker');
+const { fakerEN_GB } = require('@faker-js/faker');
+const faker = fakerEN_GB;
 const fs = require('fs')
 const path = require('path')
 
@@ -102,7 +103,7 @@ const getCustomersTable = () => {
       city: faker.location.city(),
       region: faker.location.state(),
       postal_code: faker.location.zipCode(),
-      country: faker.location.country(),
+      country: 'United Kingdom',
     });
   }
 

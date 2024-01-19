@@ -30,8 +30,8 @@ export class HeaderComponent implements OnInit {
 
   links: {[key in typeof this.linkCaptions[number]]: string} = {
     'Movies': '/movies',
-    'Rentals': '/movies/1',
-    'Customers': '/movies/2',
+    'Rentals': '/rentals',
+    'Customers': '/customers',
   }
 
   activeLink: (typeof this.linkCaptions[number]) | null = null;
