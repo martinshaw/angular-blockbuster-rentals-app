@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MovieModelType, MovieRentalPriceModelType } from '../app.types';
+import { CustomerModelType, MovieModelType, MovieRentalPriceModelType } from '../app.types';
 import { MoviesService } from './movies.service';
 
 @Injectable({
@@ -7,9 +7,12 @@ import { MoviesService } from './movies.service';
 })
 export class RentalCreationSidebarFormService {
   private sidebarIsOpen: boolean = false;
-  private moviesPendingRental: MovieModelType[] = [];
-  private movieRentalPricePeriod: MovieRentalPriceModelType['period'] = '1 day';
 
+  private customer: CustomerModelType | null = null;
+
+  private moviesPendingRental: MovieModelType[] = [];
+
+  private movieRentalPricePeriod: MovieRentalPriceModelType['period'] = '1 day';
   private movieRentalPrices: Record<string, MovieRentalPriceModelType[]> = {};
 
   private discounts: any[] = [];
@@ -22,6 +25,7 @@ export class RentalCreationSidebarFormService {
 
   public resetCreationForm() {
     this.setSidebarIsOpen(false);
+    this.setCustomer(null);
     this.clearMoviesPendingRental();
     this.setMovieRentalPricePeriod('1 day');
     this.setMovieRentalPricesByArray([]);
@@ -33,6 +37,14 @@ export class RentalCreationSidebarFormService {
 
   public getSidebarIsOpen(): boolean {
     return this.sidebarIsOpen;
+  }
+
+  public setCustomer(customer: CustomerModelType | null) {
+    this.customer = customer;
+  }
+
+  public getCustomer(): CustomerModelType | null {
+    return this.customer;
   }
 
   public addMovieToPendingRental(movie: MovieModelType) {
@@ -71,6 +83,7 @@ export class RentalCreationSidebarFormService {
   }
 
   public canSubmitPendingRental(): boolean {
+    if (this.customer == null) return false;
     if (this.getMoviesPendingRentalCount() <= 0) return false;
     if (this.getMovieRentalPricePeriod() == null) return false;
     if (['1 day', '2 days', '3 days', '1 week', '2 weeks', '3 weeks', '1 month', '2 months', '3 months'].includes(this.getMovieRentalPricePeriod()) === false) return false;

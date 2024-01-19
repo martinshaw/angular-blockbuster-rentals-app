@@ -1,7 +1,10 @@
 <mat-card>
   <mat-card-header class="header">
     <mat-card-title> {{ movie.title }}</mat-card-title>
-    <mat-card-subtitle>{{ getCountAvailableForRentalWithPending() }} Available for Rental of {{ movie.count_owned }} Owned</mat-card-subtitle>
+    <mat-card-subtitle
+      >{{ getCountAvailableForRentalWithPending() }} Available for Rental of
+      {{ movie.count_owned }} Owned</mat-card-subtitle
+    >
   </mat-card-header>
 
   <div class="columns">
@@ -46,7 +49,9 @@
   </div>
 
   <mat-card-actions class="actions">
-    <button mat-button (click)="navigate(['/movies', movie.id])">Details</button>
+    <!-- <button mat-button (click)="navigate(['/movies', movie.id])">
+      Details
+    </button> -->
 
     <div class="spacer"></div>
 

@@ -69,11 +69,12 @@ export type CustomerModelType = {
 export type RentalModelType = {
   id?: number;
 
-  startDateAt: Date | null;
-  endDateAt: Date | null;
-  returnDateAt: Date | null;
+  start_date_at: Date | null;
+  end_date_at: Date | null;
+  return_date_at: Date | null;
 
-  customerId: number;
+  customer_id: number;
+  count_movies: number;
 
   movies?: MovieModelType[];
 };

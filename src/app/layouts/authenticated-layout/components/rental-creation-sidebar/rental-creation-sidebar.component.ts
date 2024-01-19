@@ -9,7 +9,8 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MovieRentalPriceModelType } from '../../../../app.types';
+import { CustomerModelType, MovieRentalPriceModelType } from '../../../../app.types';
+import { CustomersService } from '../../../../services/customers.service';
 
 
 @Component({
@@ -33,6 +34,9 @@ import { MovieRentalPriceModelType } from '../../../../app.types';
   styleUrl: './rental-creation-sidebar.component.scss'
 })
 export class RentalCreationSidebarComponent implements OnInit {
+  customerFormControl = new FormControl<string | null>(null);
+  customerOptions: CustomerModelType[] = [];
+
   rentalPeriodFormControl = new FormControl<MovieRentalPriceModelType['period']>('1 day');
   rentalPeriodOptions: MovieRentalPriceModelType['period'][] = [
     '1 day',
@@ -47,11 +51,29 @@ export class RentalCreationSidebarComponent implements OnInit {
   ];
 
   constructor(
+    public customerService: CustomersService,
     public rentalCreationSidebarFormService: RentalCreationSidebarFormService,
   ) { }
 
   ngOnInit(): void {
+    this.customerFormControl.valueChanges.subscribe((value) => this.onCustomerFormControlChange(value));
     this.rentalPeriodFormControl.valueChanges.subscribe((value) => this.onRentalPeriodFormControlChange(value));
+  }
+
+  private async onCustomerFormControlChange(value: string | null) {
+    if (value == null) {
+      this.customerOptions = [];
+      return;
+    }
+
+    this.customerOptions = await this.customerService.searchCustomers$(value);
+
+    if (Number.isNaN(Number(value))) return;
+
+    const customer = await this.customerService.getCustomerById$(Number(value));
+    if (customer == null) return;
+
+    this.rentalCreationSidebarFormService.setCustomer(customer);
   }
 
   private getDateTodayPlusDays(days: number = 0): Date {

@@ -1,5 +1,32 @@
 <div class="sidebar">
   <div class="heading">
+    <div class="heading__left">Customer</div>
+    <div class="heading__right" *ngIf="this.rentalCreationSidebarFormService.getCustomer() != null">
+      {{this.rentalCreationSidebarFormService.getCustomer()?.name}}
+    </div>
+  </div>
+
+  <div class="dropdown">
+    <mat-form-field>
+      <input
+        type="text"
+        aria-label="Customer"
+        matInput
+        [formControl]="customerFormControl"
+        [matAutocomplete]="customerAutocomplete"
+        [required]="true"
+      />
+      <mat-autocomplete #customerAutocomplete="matAutocomplete">
+        @for (option of customerOptions; track option) {
+        <mat-option [value]="option.id"
+          >#{{ option.id }} - {{ option.name }}</mat-option
+        >
+        }
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+
+  <div class="heading">
     <div class="heading__left">Movies</div>
     <div class="heading__right">
       {{ this.rentalCreationSidebarFormService.getMoviesPendingRentalCount() }}
@@ -46,7 +73,7 @@
     <div class="heading__right">
       {{
         this.rentalCreationSidebarFormService.getPendingRentalSubtotal()
-          | currency:'GBP'
+          | currency : "GBP"
       }}
     </div>
   </div>
@@ -57,7 +84,7 @@
       <div class="value">
         {{
           this.rentalCreationSidebarFormService.getPendingRentalDiscount()
-            | currency:'GBP'
+            | currency : "GBP"
         }}
       </div>
     </div>
@@ -66,7 +93,7 @@
       <div class="value">
         {{
           this.rentalCreationSidebarFormService.getPendingRentalTotal()
-            | currency:'GBP'
+            | currency : "GBP"
         }}
       </div>
     </div>

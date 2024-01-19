@@ -6,7 +6,6 @@ import { CustomerModelType } from '../app.types';
   providedIn: 'root'
 })
 export class CustomersService {
-
   constructor(
     public apiService: ApiService,
   ) { }
@@ -30,6 +29,16 @@ export class CustomersService {
       .catch((error) => {
         console.error(error);
         return null;
+      });
+  }
+
+  searchCustomers$(searchTerm: string): Promise<CustomerModelType[]> {
+    return this.apiService
+      .makeRequest<CustomerModelType[]>('/customers', 'GET', {q: searchTerm})
+      .then((response) => response.data)
+      .catch((error) => {
+        console.error(error);
+        return [];
       });
   }
 }
