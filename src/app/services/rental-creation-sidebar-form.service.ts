@@ -97,8 +97,9 @@ export class RentalCreationSidebarFormService {
 
   public getMovieRentalPrice(movie: MovieModelType): MovieRentalPriceModelType[] {
     if (movie.id == null) return [];
+    if (this.movieRentalPrices[movie.id] == null) return [];
 
-    return this.movieRentalPrices[movie.id] ?? [];
+    return this.movieRentalPrices[movie.id].filter(price => price.period === this.getMovieRentalPricePeriod()) ?? [];
   }
 
   public getMovieRentalPrices(): Record<string, MovieRentalPriceModelType[]> {

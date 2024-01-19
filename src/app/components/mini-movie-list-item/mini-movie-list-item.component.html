@@ -8,12 +8,30 @@
     </div>
     <div class="details">
       <div class="title">{{ movie.title }}</div>
-      <!-- TODO: Add price instead of year when I have added mock API-->
-      <div class="year">{{ movie.year }}</div>
+      <div
+        class="price"
+        *ngIf="
+          this.rentalCreationSidebarFormService.getMovieRentalPrice(movie)
+            .length > 0
+        "
+      >
+        {{
+          this.rentalCreationSidebarFormService.getMovieRentalPrice(movie)[0]
+            .price | currency
+        }}
+      </div>
     </div>
     <div class="buttons">
       <!-- Remove movie icon button-->
-      <button mat-icon-button color="warn" (click)="this.rentalCreationSidebarFormService.removeMovieFromPendingRental(movie)">
+      <button
+        mat-icon-button
+        color="warn"
+        (click)="
+          this.rentalCreationSidebarFormService.removeMovieFromPendingRental(
+            movie
+          )
+        "
+      >
         <mat-icon>delete</mat-icon>
       </button>
     </div>
