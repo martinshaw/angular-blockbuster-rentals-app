@@ -5,7 +5,7 @@
 
 <h1>Blockbuster Rentals App</h1>
 
-<h2>Created by Martin Shaw to demonstrate Angular abilities for RealityMine role</h2>
+<i>Created by Martin Shaw to demonstrate Angular abilities for RealityMine role</i>
 </center>
 
 ## Click here to watch a demonstration of the app:
